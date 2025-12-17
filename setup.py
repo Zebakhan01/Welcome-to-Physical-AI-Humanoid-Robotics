@@ -1,0 +1,28 @@
+from setuptools import setup, find_packages
+
+setup(
+    name="physical-ai-textbook-backend",
+    version="1.0.0",
+    packages=find_packages(),
+    install_requires=[
+        "fastapi==0.115.0",
+        "uvicorn[standard]==0.32.0",
+        "python-dotenv==1.0.1",
+        "qdrant-client==1.12.1",
+        "openai==1.52.2",
+        "pydantic==2.9.2",
+        "sqlalchemy==2.0.35",
+        "asyncpg==0.30.0",
+        "passlib[bcrypt]==1.7.4",
+        "python-multipart==0.0.12",
+        "python-jose[cryptography]==3.3.0",
+        "aiofiles==23.2.1",
+        "requests==2.32.3",
+        "tiktoken==0.8.0",
+        "markdown==3.7",
+        "beautifulsoup4==4.12.3",
+    ],
+    author="AI Hackathon Team",
+    description="Backend for Physical AI & Humanoid Robotics Textbook",
+    python_requires=">=3.8",
+)

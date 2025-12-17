@@ -1,0 +1,237 @@
+openapi: 3.0.0
+info:
+  title: Physical AI & Humanoid Robotics Textbook - Content API
+  description: API for managing and retrieving textbook content
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+    description: Development server
+  - url: https://api.physical-ai-textbook.com
+    description: Production server
+
+paths:
+  /api/content/chapters:
+    get:
+      summary: Get all textbook chapters
+      description: Retrieve a list of all textbook chapters with metadata
+      parameters:
+        - name: category
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [intro, weeks, modules, capstone, hardware, appendix]
+          description: Filter chapters by category
+        - name: module
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [ros-2, gazebo, unity, nvidia-isaac, vla]
+          description: Filter chapters by module
+      responses:
+        '200':
+          description: List of chapters retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  chapters:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Chapter'
+        '500':
+          description: Internal server error
+
+  /api/content/chapters/{chapter_id}:
+    get:
+      summary: Get specific chapter content
+      description: Retrieve content and metadata for a specific chapter
+      parameters:
+        - name: chapter_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Chapter content retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  chapter:
+                    $ref: '#/components/schemas/Chapter'
+                  content:
+                    type: string
+                    description: The full markdown content of the chapter
+                  related_chapters:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Chapter'
+                    description: List of related chapters
+        '404':
+          description: Chapter not found
+        '500':
+          description: Internal server error
+
+  /api/content/search:
+    get:
+      summary: Search textbook content
+      description: Search across all textbook content with optional filters
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Search query string
+        - name: category
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [intro, weeks, modules, capstone, hardware, appendix]
+          description: Filter search by category
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 10
+            maximum: 50
+          description: Maximum number of results to return
+      responses:
+        '200':
+          description: Search results retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        chapter:
+                          $ref: '#/components/schemas/Chapter'
+                        content_snippet:
+                          type: string
+                          description: Snippet of content matching the search
+                        relevance_score:
+                          type: number
+                          description: Relevance score for the match
+                  total_count:
+                    type: integer
+                    description: Total number of matching results
+        '500':
+          description: Internal server error
+
+  /api/content/embeddings:
+    post:
+      summary: Generate embeddings for content
+      description: Generate vector embeddings for textbook content chunks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - content_chunks
+              properties:
+                content_chunks:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                      - content
+                      - metadata
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                      content:
+                        type: string
+                        description: The text content to embed
+                      metadata:
+                        type: object
+                        description: Additional metadata for the content chunk
+      responses:
+        '200':
+          description: Embeddings generated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                        embedding:
+                          type: array
+                          items:
+                            type: number
+                          description: The generated embedding vector
+                        status:
+                          type: string
+                          enum: [success, error]
+                        error:
+                          type: string
+                          description: Error message if embedding failed
+        '500':
+          description: Internal server error
+
+components:
+  schemas:
+    Chapter:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+          description: The title of the chapter
+        slug:
+          type: string
+          description: URL-friendly identifier
+        category:
+          type: string
+          enum: [intro, weeks, modules, capstone, hardware, appendix]
+          description: The category of the chapter
+        week_number:
+          type: integer
+          description: Week number for week-based chapters (1-13)
+        module_name:
+          type: string
+          description: Module name for module-based chapters
+        learning_objectives:
+          type: array
+          items:
+            type: string
+          description: List of learning objectives for the chapter
+        prerequisites:
+          type: array
+          items:
+            type: string
+          description: List of prerequisites for this chapter
+        estimated_reading_time:
+          type: integer
+          description: Estimated reading time in minutes
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time

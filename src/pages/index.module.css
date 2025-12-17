@@ -1,0 +1,224 @@
+/* src/pages/index.module.css */
+.heroBanner {
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #66afea 0%, #4ba259 100%);
+  color: white;
+  margin-bottom: 3rem;
+}
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 2rem 0;
+  }
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.welcomeTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.welcomeSubtitle {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+/* Card grid styles */
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 2rem 2rem 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Individual card styles */
+.card {
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 0;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: rgb(238, 248, 249);
+  display: block;
+  position: relative;
+  overflow: hidden;
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 100%);
+  z-index: 1;
+}
+
+.cardContent {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.5rem;
+}
+
+.cardTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: white;
+  margin: 0;
+}
+
+.cardDescription {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  line-height: 1.4;
+  flex-grow: 1;
+}
+
+.cardHoverIndicator {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 3;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: all 0.3s ease;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.card:hover .cardHoverIndicator {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.animatedArrow {
+  display: inline-block;
+  position: relative;
+  animation: bounce 2s infinite;
+}
+
+.animatedArrow::after {
+  content: '→';
+  position: absolute;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-5px); }
+  60% { transform: translateY(-3px); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: translateY(-50%) scale(1); }
+  50% { opacity: 0.7; transform: translateY(-50%) scale(1.2); }
+}
+
+/* Background images for cards - using patterns to simulate AI/robotics images */
+.bg-ros {
+  background:
+    radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(58, 255, 176, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(159, 251, 233, 0.3) 0%, transparent 50%),
+    linear-gradient(135deg, #4834d4 0%, #686de0 100%);
+  background-size: cover;
+  background-position: center;
+}
+
+.bg-gazebo {
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.356) 0%, transparent 50%),
+    radial-gradient(circle at 70% 70%, rgba(200, 200, 200, 0.33) 0%, transparent 50%),
+    linear-gradient(135deg, #05c46b 0%, #0be881 100%);
+  background-size: cover;
+  background-position: center;
+}
+
+.bg-unity {
+  background:
+    linear-gradient(45deg, transparent 48%, rgba(255, 255, 255, 0.1) 50%, transparent 52%),
+    linear-gradient(-45deg, transparent 48%, rgba(255, 255, 255, 0.1) 50%, transparent 52%),
+    linear-gradient(135deg, #00d2d3 0%, #54a0ff 100%);
+  background-size: 20px 20px, 20px 20px, cover;
+  background-position: 0 0, 0 0, center;
+}
+
+.bg-isaac {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.3) 0%, transparent 70%),
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0px, rgba(255, 255, 255, 0.1) 5px, transparent 5px, transparent 10px),
+    linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+  background-size: cover, 15px 15px, cover;
+  background-position: center, center, center;
+}
+
+.bg-vla {
+  background:
+    linear-gradient(90deg, transparent 49%, rgba(255, 255, 255, 0.1) 50%, transparent 51%),
+    linear-gradient(0deg, transparent 49%, rgba(255, 255, 255, 0.1) 50%, transparent 51%),
+    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.2) 0%, transparent 50%),
+    linear-gradient(135deg, #a55eea 0%, #2ed573 100%);
+  background-size: 30px 30px, 30px 30px, cover, cover;
+  background-position: 0 0, 0 0, center, center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .heroBanner {
+    padding: 3rem 1rem;
+  }
+
+  .welcomeTitle {
+    font-size: 2rem;
+  }
+
+  .welcomeSubtitle {
+    font-size: 1rem;
+  }
+
+  .cardGrid {
+    grid-template-columns: 1fr;
+    padding: 1rem 1rem 3rem;
+    gap: 1.5rem;
+  }
+
+  .card {
+    height: 180px;
+  }
+}

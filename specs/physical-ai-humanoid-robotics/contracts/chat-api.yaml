@@ -1,0 +1,192 @@
+openapi: 3.0.0
+info:
+  title: Physical AI & Humanoid Robotics Textbook - Chat API
+  description: API for the RAG chatbot system that answers questions based on textbook content
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+    description: Development server
+  - url: https://api.physical-ai-textbook.com
+    description: Production server
+
+paths:
+  /api/chat:
+    post:
+      summary: Process user query and return AI response
+      description: Takes a user query and returns a response based on textbook content using RAG
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - message
+                - conversation_id
+              properties:
+                message:
+                  type: string
+                  description: The user's query message
+                  example: "What is the difference between forward and inverse kinematics?"
+                conversation_id:
+                  type: string
+                  format: uuid
+                  description: ID of the conversation (null for new conversation)
+                  example: "123e4567-e89b-12d3-a456-426614174000"
+                selected_text:
+                  type: string
+                  description: Optional text selected by user for context
+                  example: "Forward kinematics calculates the position of the end effector given joint angles"
+                user_id:
+                  type: string
+                  format: uuid
+                  description: Optional user ID for personalization
+                  example: "987e6543-e21b-45d6-a789-4321dcba9876"
+      responses:
+        '200':
+          description: Successful response with AI-generated answer
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+                    description: The AI-generated response
+                    example: "Forward kinematics calculates the end effector position from joint angles, while inverse kinematics calculates joint angles from desired end effector position."
+                  conversation_id:
+                    type: string
+                    format: uuid
+                    description: ID of the conversation (newly created if null was provided)
+                  sources:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        chapter:
+                          type: string
+                          description: Chapter title where information was found
+                        section:
+                          type: string
+                          description: Section title where information was found
+                        url:
+                          type: string
+                          format: uri
+                          description: URL to the relevant content
+                    description: List of sources used to generate the response
+                  context_chunks_used:
+                    type: array
+                    items:
+                      type: string
+                      format: uuid
+                    description: IDs of content chunks used in the response
+        '400':
+          description: Bad request - invalid input
+        '500':
+          description: Internal server error
+
+  /api/chat/conversation/{conversation_id}:
+    get:
+      summary: Get conversation history
+      description: Retrieve the history of messages in a specific conversation
+      parameters:
+        - name: conversation_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Conversation history retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  conversation:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                      title:
+                        type: string
+                      messages:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Message'
+                      created_at:
+                        type: string
+                        format: date-time
+        '404':
+          description: Conversation not found
+        '500':
+          description: Internal server error
+
+  /api/chat/conversations:
+    get:
+      summary: Get user's conversations
+      description: Retrieve list of conversations for a specific user
+      parameters:
+        - name: user_id
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: List of user's conversations
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  conversations:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                        title:
+                          type: string
+                        created_at:
+                          type: string
+                          format: date-time
+                        updated_at:
+                          type: string
+                          format: date-time
+        '500':
+          description: Internal server error
+
+components:
+  schemas:
+    Message:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        role:
+          type: string
+          enum: [user, assistant]
+        content:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        sources:
+          type: array
+          items:
+            type: object
+            properties:
+              chapter:
+                type: string
+              section:
+                type: string
+              url:
+                type: string
+                format: uri
