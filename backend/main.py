@@ -13,9 +13,13 @@ from backend.api.chat.message_processing import router as message_router
 from backend.api.rag.embedding_service import router as embedding_router
 from backend.api.rag.retrieval_service import router as retrieval_router
 from backend.api.rag.vector_store import router as vector_router
+from backend.api.rag.content_indexer import router as content_indexer_router
+from backend.api.rag.llm_service import router as llm_router
 from backend.api.auth.auth_routes import router as auth_router
 from backend.api.content.content_parser import router as content_router
+from backend.api.content.content_loader import router as content_loader_router
 from backend.api.content.metadata_service import router as metadata_router
+from backend.api.personalization.user_service import router as personalization_router
 from backend.api.robotics.kinematics_service import router as kinematics_router
 from backend.api.robotics.dynamics_service import router as dynamics_router
 from backend.api.sensors.sensor_processing import router as sensor_router
@@ -56,8 +60,11 @@ app.include_router(message_router, prefix="/api/chat", tags=["message-processing
 app.include_router(embedding_router, prefix="/api/rag", tags=["rag"])
 app.include_router(retrieval_router, prefix="/api/rag", tags=["retrieval"])
 app.include_router(vector_router, prefix="/api/rag", tags=["vector-store"])
+app.include_router(content_indexer_router, prefix="/api/rag", tags=["content-indexer"])
+app.include_router(llm_router, prefix="/api/rag", tags=["llm"])
 app.include_router(auth_router, prefix="/api/auth", tags=["auth"])
 app.include_router(content_router, prefix="/api/content", tags=["content"])
+app.include_router(content_loader_router, prefix="/api/content", tags=["content-loader"])
 app.include_router(metadata_router, prefix="/api/content", tags=["metadata"])
 app.include_router(kinematics_router, prefix="/api/robotics", tags=["kinematics"])
 app.include_router(dynamics_router, prefix="/api/robotics", tags=["dynamics"])

@@ -21,6 +21,12 @@ function HomepageHeader() {
             to="/docs/intro/intro">
             Start the Textbook
           </Link>
+          <Link
+            className="button button--primary button--lg"
+            to="/chat"
+            style={{ marginLeft: '1rem' }}>
+            Ask AI Assistant
+          </Link>
         </div>
       </div>
     </header>
