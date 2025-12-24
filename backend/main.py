@@ -10,11 +10,7 @@ load_dotenv()
 # Import API routers
 from backend.api.chat.chat_routes import router as chat_router
 from backend.api.chat.message_processing import router as message_router
-from backend.api.rag.embedding_service import router as embedding_router
-from backend.api.rag.retrieval_service import router as retrieval_router
-from backend.api.rag.vector_store import router as vector_router
-from backend.api.rag.content_indexer import router as content_indexer_router
-from backend.api.rag.llm_service import router as llm_router
+from backend.api.rag.rag_endpoints import router as rag_router
 from backend.api.auth.auth_routes import router as auth_router
 from backend.api.content.content_parser import router as content_router
 from backend.api.content.content_loader import router as content_loader_router
@@ -37,6 +33,7 @@ from backend.api.humanoid_architecture.humanoid_architecture_service import rout
 from backend.api.project_integration.project_integration_service import router as project_integration_router
 from backend.api.ros2.ros2_service import router as ros2_router
 from backend.api.nvidia_isaac.isaac_service import router as isaac_router
+from backend.config.rag_settings import settings
 
 # Create FastAPI app
 app = FastAPI(
@@ -57,11 +54,7 @@ app.add_middleware(
 # Include API routers
 app.include_router(chat_router, prefix="/api/chat", tags=["chat"])
 app.include_router(message_router, prefix="/api/chat", tags=["message-processing"])
-app.include_router(embedding_router, prefix="/api/rag", tags=["rag"])
-app.include_router(retrieval_router, prefix="/api/rag", tags=["retrieval"])
-app.include_router(vector_router, prefix="/api/rag", tags=["vector-store"])
-app.include_router(content_indexer_router, prefix="/api/rag", tags=["content-indexer"])
-app.include_router(llm_router, prefix="/api/rag", tags=["llm"])
+app.include_router(rag_router, prefix="/api", tags=["rag"])
 app.include_router(auth_router, prefix="/api/auth", tags=["auth"])
 app.include_router(content_router, prefix="/api/content", tags=["content"])
 app.include_router(content_loader_router, prefix="/api/content", tags=["content-loader"])
@@ -93,5 +86,9 @@ async def health_check():
     return {"status": "healthy"}
 
 if __name__ == "__main__":
-    port = int(os.getenv("PORT", 8000))
-    uvicorn.run("backend.main:app", host="0.0.0.0", port=port, reload=True)
+    uvicorn.run(
+        "main:app",
+        host="127.0.0.1",
+        port=8000,
+        reload=True
+    )

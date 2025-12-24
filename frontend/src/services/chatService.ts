@@ -1,4 +1,5 @@
 // src/services/chatService.ts
+
 export interface ChatRequest {
   message: string;
   conversation_id?: string;
@@ -37,12 +38,11 @@ export interface ResetResponse {
   message: string;
 }
 
-class ChatService {
+export class ChatService {
   private baseUrl: string;
 
-  constructor() {
-    // Use environment variable or default to localhost
-    this.baseUrl = process.env.BACKEND_URL || 'http://localhost:8000';
+  constructor(baseUrl?: string) {
+    this.baseUrl = baseUrl || process.env.BACKEND_URL || 'http://localhost:8000';
   }
 
   async sendMessage(request: ChatRequest): Promise<ChatResponse> {
@@ -131,4 +131,5 @@ class ChatService {
   }
 }
 
+// Default instance for backward compatibility
 export const chatService = new ChatService();

@@ -84,16 +84,18 @@
 
 ### Functional Requirements
 
-- **FR-001**: System MUST [specific capability, e.g., "allow users to create accounts"]
-- **FR-002**: System MUST [specific capability, e.g., "validate email addresses"]  
-- **FR-003**: Users MUST be able to [key interaction, e.g., "reset their password"]
-- **FR-004**: System MUST [data requirement, e.g., "persist user preferences"]
-- **FR-005**: System MUST [behavior, e.g., "log all security events"]
+- **FR-001**: System MUST retrieve answers exclusively from textbook content using RAG (no external knowledge)
+- **FR-002**: System MUST use Cohere API for text embeddings (not OpenAI)
+- **FR-003**: System MUST store vectors in Qdrant Cloud vector database
+- **FR-004**: System MUST store persistent data in Neon Serverless PostgreSQL
+- **FR-005**: System MUST load all configuration from environment variables (no hardcoded values)
+- **FR-006**: System MUST support user-selected text queries from the textbook
+- **FR-007**: System MUST provide citations to source material when responding to queries
 
 *Example of marking unclear requirements:*
 
-- **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
-- **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
+- **FR-008**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
+- **FR-009**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
 
 ### Key Entities *(include if feature involves data)*
 

@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import clsx from 'clsx';
 import styles from './ChatInterface.module.css';
-import { chatService } from '../../services/chatService';
+import { ChatService } from '../../services/chatService';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 interface Message {
   id: string;
@@ -16,12 +17,18 @@ interface Message {
 }
 
 const ChatInterface: React.FC = () => {
+  const { siteConfig } = useDocusaurusContext();
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [showSources, setShowSources] = useState<{[key: string]: boolean}>({});
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Initialize chat service with backend URL from site config
+  const chatService = new ChatService(
+    (siteConfig.customFields?.backendUrl as string) || 'http://localhost:8000'
+  );
 
   // Load initial welcome message
   useEffect(() => {

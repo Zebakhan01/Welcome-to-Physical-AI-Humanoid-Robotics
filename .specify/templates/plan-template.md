@@ -31,7 +31,12 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+- [ ] Backend-only development: All work confined to /backend directory, no frontend modifications
+- [ ] Deterministic RAG: Responses only from textbook content, no external knowledge
+- [ ] Environment variables: No hardcoded secrets, all config via env vars
+- [ ] Cohere embeddings: Use Cohere API exclusively (not OpenAI)
+- [ ] Qdrant vector store: Use Qdrant Cloud for vector storage
+- [ ] Neon Serverless PostgreSQL: Use for all persistent data storage
 
 ## Project Structure
 

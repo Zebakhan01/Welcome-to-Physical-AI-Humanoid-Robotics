@@ -51,6 +51,6 @@ class ContentChunk(Base):
     word_count = Column(Integer, nullable=False)
     char_count = Column(Integer, nullable=False)
     section_level = Column(Integer, default=1, nullable=False)
-    metadata = Column(JSON, nullable=True)  # Store additional metadata as JSON
+    metadata_json = Column(JSON, nullable=True)  # Store additional metadata as JSON
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)

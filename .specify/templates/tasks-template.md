@@ -21,9 +21,10 @@ description: "Task list template for feature implementation"
 ## Path Conventions
 
 - **Single project**: `src/`, `tests/` at repository root
-- **Web app**: `backend/src/`, `frontend/src/`
+- **Web app**: `backend/src/`, `frontend/src/` (FRONTEND MUST REMAIN UNCHANGED per constitution)
 - **Mobile**: `api/src/`, `ios/src/` or `android/src/`
 - Paths shown below assume single project - adjust based on plan.md structure
+- **Backend-only**: All development work in `/backend` directory per constitution
 
 <!-- 
   ============================================================================
@@ -62,12 +63,14 @@ description: "Task list template for feature implementation"
 
 Examples of foundational tasks (adjust based on your project):
 
-- [ ] T004 Setup database schema and migrations framework
-- [ ] T005 [P] Implement authentication/authorization framework
-- [ ] T006 [P] Setup API routing and middleware structure
+- [ ] T004 Setup Neon Serverless PostgreSQL schema and migrations framework
+- [ ] T005 [P] Configure Qdrant Cloud vector store connection
+- [ ] T006 [P] Setup API routing and middleware structure in backend/
 - [ ] T007 Create base models/entities that all stories depend on
 - [ ] T008 Configure error handling and logging infrastructure
-- [ ] T009 Setup environment configuration management
+- [ ] T009 Setup environment configuration management (no hardcoded secrets)
+- [ ] T010 Implement Cohere API integration for embeddings
+- [ ] T011 Create RAG service framework for textbook content retrieval
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -237,6 +240,7 @@ With multiple developers:
    - Developer B: User Story 2
    - Developer C: User Story 3
 3. Stories complete and integrate independently
+4. **CRITICAL**: All work confined to /backend directory per constitution - NO frontend modifications
 
 ---
 

@@ -1,63 +1,86 @@
-# Physical AI & Humanoid Robotics Textbook Constitution
+<!--
+SYNC IMPACT REPORT
+Version change: 1.0.0 → 2.0.0
+Modified principles:
+- I. Spec-First Development → I. Backend-Only Development (NON-NEGOTIABLE)
+- II. Educational Clarity → II. Deterministic RAG Answers (NON-NEGOTIABLE)
+- III. Modularity → III. Environment Variables for Configuration (NON-NEGOTIABLE)
+- IV. AI-Native Integration → IV. Spec-First Development
+- V. Hardware Accuracy → V. Cohere Embeddings and Qdrant Vector Store
+- VI. Course Alignment → VI. Neon Serverless PostgreSQL for Data Persistence
+
+Added sections: None
+Removed sections: None
+Templates requiring updates:
+- ✅ plan-template.md - updated to reflect backend-only focus
+- ✅ spec-template.md - updated to reflect RAG requirements
+- ✅ tasks-template.md - updated to reflect backend structure
+- ✅ phr-template.prompt.md - no changes needed
+
+Follow-up TODOs: None
+-->
+# Physical AI & Humanoid Robotics — Integrated RAG Chatbot Constitution
 
 ## Core Principles
 
-### I. Spec-First Development
-All content and features begin with a detailed specification before implementation. Every chapter, section, and interactive element must have a clear, documented purpose and educational objective before code is written. Specifications serve as the single source of truth for all development activities.
+### I. Backend-Only Development (NON-NEGOTIABLE)
+All development work is strictly confined to the backend components within the /backend directory. No frontend code, UI elements, or client-side modifications are permitted. The existing frontend must remain completely untouched and preserved as-is. This ensures the frontend continues to function without disruption while backend capabilities are enhanced.
 
-### II. Educational Clarity Over Technical Sophistication
-Content must prioritize beginner-friendly explanations while maintaining technical accuracy. Complex concepts are broken down into digestible modules with practical examples. Educational value takes precedence over showcasing advanced technical implementations.
+### II. Deterministic RAG Answers (NON-NEGOTIABLE)
+All chatbot responses must derive exclusively from the textbook content and user-selected text. No external knowledge, internet calls, or hallucinated information is permitted. Answers must be traceable to specific content within the book. The system must provide citations to source material when responding to queries.
 
-### III. Modularity and Reusability (NON-NEGOTIABLE)
-Every content module, code example, and interactive component must be designed for reuse across different sections of the textbook. Content is structured in discrete, self-contained units that can be combined in various ways to support different learning pathways.
+### III. Environment Variables for Configuration (NON-NEGOTIABLE)
+No hardcoded secrets, API keys, or configuration values are allowed in the codebase. All sensitive information and configuration parameters must be loaded from environment variables only. This ensures secure deployment across different environments and prevents accidental exposure of credentials.
 
-### IV. AI-Native Integration
-The textbook is designed from the ground up to work seamlessly with RAG (Retrieval-Augmented Generation) systems and AI assistants. Content structure, metadata, and formatting support intelligent querying and contextual responses for the secondary chatbot functionality.
+### IV. Spec-First Development
+All features and implementations begin with detailed specifications before any code is written. Every API endpoint, data model, and system component must have clear requirements and acceptance criteria documented before implementation begins. Specifications serve as the single source of truth for all development activities.
 
-### V. Hardware and Robotics Fact Accuracy
-All robotics and hardware information must be verified against authoritative sources. No speculation or hallucination about robotic capabilities, sensors, actuators, or physical AI principles. Technical facts are sourced and cited appropriately.
+### V. Cohere Embeddings and Qdrant Vector Store
+The system exclusively uses Cohere for text embeddings (not OpenAI) and Qdrant Cloud for vector storage. This technology stack ensures consistent, high-quality semantic search capabilities optimized for textbook content retrieval.
 
-### VI. Course Alignment
-All content strictly adheres to the official "Physical AI & Humanoid Robotics" course outline. Deviations require explicit justification and approval. Educational objectives align with the curriculum's stated learning outcomes.
+### VI. Neon Serverless PostgreSQL for Data Persistence
+All persistent data must be stored in Neon Serverless PostgreSQL database. This provides scalable, reliable storage for metadata, user sessions, and any other required data while maintaining cost efficiency.
 
 ## Technology Stack Requirements
 
 ### Primary Technologies
-- Content must be authored in Markdown with structured metadata
-- Interactive elements implemented with web technologies (HTML/CSS/JS)
-- Backend services for RAG integration use modern frameworks appropriate for the hackathon
-- All code examples must be executable and tested in the specified development environment
+- Backend: Python 3.11 + FastAPI framework
+- Embeddings: Cohere API (exclusively, no OpenAI)
+- Vector Store: Qdrant Cloud
+- Database: Neon Serverless PostgreSQL
+- Chat Framework: OpenAI Agents / ChatKit compatible
+- No training, retrieval-only RAG system
 
 ### Content Standards
-- Modular content structure supporting multiple presentation formats
-- Consistent terminology and notation throughout the textbook
-- Accessibility compliance for diverse learning needs
-- Cross-platform compatibility for maximum reach
+- Textbook content serves as the ONLY source of truth for RAG responses
+- All answers must be verifiable against provided textbook materials
+- Support for user-selected text queries from the textbook
+- No external knowledge integration or internet access
 
 ## Development Workflow
 
-### Content Creation Process
-- All chapters begin with detailed specifications outlining learning objectives, prerequisites, and assessment criteria
-- Content undergoes peer review focusing on educational effectiveness and technical accuracy
-- Interactive elements are prototyped and tested with target audience before integration
-- Regular synchronization between textbook content and RAG system indexing
+### Backend-First Approach
+- All development activities focus exclusively on backend services in /backend directory
+- API endpoints designed for frontend compatibility (existing frontend remains unchanged)
+- Services built to support RAG functionality with textbook content
+- Regular testing to ensure frontend-backend integration remains intact
 
 ### Quality Assurance
-- Educational effectiveness validated through learning assessments
-- Technical accuracy verified by subject matter experts
-- Code examples tested in target environments
-- Accessibility and usability requirements met for all interactive components
+- RAG responses validated against textbook content accuracy
+- API endpoints tested for performance and reliability
+- Security review ensures no hardcoded secrets or configuration
+- Performance testing for vector search and retrieval operations
 
 ### Collaboration Protocols
-- Contributions aligned with established educational philosophy
-- Technical implementations follow agreed architectural patterns
-- Regular reviews ensure content consistency across modules
-- Feedback from early adopters incorporated iteratively
+- All changes confined to backend components only
+- Frontend compatibility maintained at all times
+- Regular verification that existing frontend functionality remains intact
+- Clear documentation of API contracts for frontend integration
 
 ## Governance
 
-This constitution governs all aspects of the "Physical AI & Humanoid Robotics" textbook development. All contributors must understand and abide by these principles. Changes to this constitution require explicit approval from the project leadership team with clear justification tied to educational or technical objectives.
+This constitution governs all aspects of the "Physical AI & Humanoid Robotics — Integrated RAG Chatbot" backend development. All contributors must understand and abide by these principles. Changes to this constitution require explicit approval from the project leadership team with clear justification tied to educational or technical objectives.
 
-All pull requests and code reviews must verify compliance with constitutional principles. Complexity must be justified by clear educational or functional benefits. Use this document as the primary guidance for all development decisions.
+All pull requests and code reviews must verify compliance with constitutional principles. Backend-only work, no hardcoded secrets, and deterministic RAG answers are mandatory requirements. Use this document as the primary guidance for all development decisions.
 
-**Version**: 1.0.0 | **Ratified**: 2025-12-14 | **Last Amended**: 2025-12-14
+**Version**: 2.0.0 | **Ratified**: 2025-12-14 | **Last Amended**: 2025-12-23
